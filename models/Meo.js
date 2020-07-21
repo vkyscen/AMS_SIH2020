@@ -24,4 +24,4 @@ const MeoSchema = new Schema({
   },
 });
 
-module.exports = Meo = mongoose.model("Meo's", MeoSchema);
+module.exports = Meo = mongoose.model("Meos", MeoSchema);

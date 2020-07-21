@@ -2,6 +2,8 @@ const express = require("express");
 const port = process.env.PORT || 5000;
 const app = express();
 var http = require("http").Server(app);
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 app.use(morgan("dev"));
@@ -28,6 +30,13 @@ const server = http.listen(port, () => {
 });
 
 //demo route
-app.get("/", (re1, res) => {
+app.get("/", (req, res) => {
   res.sendStatus(200);
 });
+
+//Routes for Deo Web
+app.use("/deo", require("./routes/DeoWeb"));
+// //Routes for Meo Web
+app.use("/meo", require("./routes/MeoApp"));
+// //Routes for School Web
+app.use("/school", require("./routes/SchoolWeb"));

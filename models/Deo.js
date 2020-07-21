@@ -20,4 +20,4 @@ const DeoSchema = new Schema({
   },
 });
 
-module.exports = Deo = mongoose.model("Deo's", DeoSchema);
+module.exports = Deo = mongoose.model("Deos", DeoSchema);

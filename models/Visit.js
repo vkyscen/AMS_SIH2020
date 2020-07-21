@@ -62,4 +62,4 @@ const VisitSchema = new Schema({
   },
 });
 
-module.exports = Visit = mongoose.model("Visit's", VisitSchema);
+module.exports = Visit = mongoose.model("Visits", VisitSchema);
