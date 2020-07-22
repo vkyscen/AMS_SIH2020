@@ -25,7 +25,7 @@ router.post("/newuser", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-//login
+//1)login
 router.post("/login", (req, res) => {
   School.findOne({ userId: req.body.name, password: req.body.password })
     .then((d) => {
@@ -41,4 +41,8 @@ router.post("/login", (req, res) => {
     });
 });
 
+//grievance                                             |params-> schoolId
+router.post("/grievance", (req, res) => {
+  let schoolName = await;
+});
 module.exports = router;

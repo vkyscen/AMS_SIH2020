@@ -22,19 +22,30 @@ const SchoolSchema = new Schema({
     type: String,
   },
 
-  isVisited: {
-    type: Boolean,
-    required: true,
-  },
   mId: {
     type: String,
     required: true,
   },
+
   dId: {
     type: String,
     required: true,
   },
   geoHash: {
+    type: String,
+  },
+  isVisited: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  dateTobeVisited: {
+    type: Date,
+  },
+  meoName: {
+    type: String,
+  },
+  schoolAdress: {
     type: String,
   },
 });

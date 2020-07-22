@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const ClaimSchema = new Schema({
-  claimId: {
+const GrievanceSchema = new Schema({
+  GrievanceId: {
     type: String,
     required: true,
   },
-  status: {
+  title: {
     type: String,
     required: true,
   },
@@ -20,8 +20,8 @@ const ClaimSchema = new Schema({
     type: String,
   },
 
-  claims: {
-    type: Array,
+  type: {
+    type: String,
     required: true,
   },
 
@@ -31,4 +31,4 @@ const ClaimSchema = new Schema({
   },
 });
 
-module.exports = Claim = mongoose.model("Claims", ClaimSchema);
+module.exports = Grievance = mongoose.model("Grievances", GrievanceSchema);

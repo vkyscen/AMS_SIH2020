@@ -40,20 +40,37 @@ router.post("/login", (req, res) => {
     });
 });
 
+//Dashboard                                           | params  -> dId
+router.get("/dashboard", (req, res) => {
+  var requestedDeo = req.query.dId;
+  School.find({ dId: requestedDeo }, [
+    "-userId",
+    "-password",
+    "-schoolId",
+    "-dId",
+    "-__v",
+    "-_id",
+  ])
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => console.log(err));
+});
 //post new or update questions from deo portal
 router.post("/postquestions", (req, res) => {
   // console.log(req.body);
   Question.findOneAndUpdate({ categoryName: req.body.categoryName }, req.body, {
     new: true,
-    upsert: true, // Make this update into an upsert
+    upsert: true,
   })
     .then((d) => {
       console.log(d);
-      // res.sendStatus(200);
       res.json(d);
     })
     .catch((err) => {
       console.log(err);
     });
 });
+
 module.exports = router;

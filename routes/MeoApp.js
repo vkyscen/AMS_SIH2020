@@ -4,6 +4,7 @@ var Meo = require("../models/Meo");
 var Visit = require("../models/Visit");
 var Claim = require("../models/Claim");
 var School = require("../models/School");
+var Question = require("../models/Questions");
 var LocalQuestions = require("../LocalQuestions");
 const { v4: uuidv4 } = require("uuid");
 const { response } = require("express");
@@ -13,7 +14,7 @@ router.post("/newuser", (req, res) => {
   var newMeo = new Meo();
   newMeo.userId = req.body.name;
   newMeo.mId = uuidv4();
-  newMeo.dId = "69bd7ffd-e3ea-402a-9577-c2810fb66d46";
+  newMeo.dId = req.body.dId;
   newMeo.password = req.body.password;
   newMeo.mandalName = req.body.mandalName;
 
@@ -26,8 +27,7 @@ router.post("/newuser", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-//login
-
+//login                                                 | body  -> name,password
 router.post("/login", (req, res) => {
   Meo.findOne({ userId: req.body.name, password: req.body.password })
     .then((d) => {
@@ -43,7 +43,7 @@ router.post("/login", (req, res) => {
     });
 });
 
-//1)list Schools
+//1)list Schools                                        | params  -> mId
 router.get("/tasklist", (req, res) => {
   var requestedMeo = req.query.mId;
   School.find({ mId: requestedMeo }, [
@@ -51,18 +51,44 @@ router.get("/tasklist", (req, res) => {
     "-password",
     "-schoolId",
     "-mId",
+    "-dId",
     "-__v",
+    "-_id",
   ])
     .then((d) => {
       console.log(d);
       res.json(d);
-      res.sendStatus(200);
     })
     .catch((err) => console.log(err));
 });
 
+//2)list categories
+router.get("/getcategories", (req, res) => {
+  Question.find({}, ["-__v", "-q1", "-q2", "-q3", "-q4", "-q5"])
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send("error occured, chck logs for more info");
+    });
+});
+
+//3)list questions in particular category     	      | params  -> categoryName
+router.get("/getquestions", (req, res) => {
+  Question.find({ categoryName: req.query.categoryName }, "-__v")
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send("error occured, chck logs for more info");
+    });
+});
 // fail safe questions route
-router.get("/lquestions", (req, res) => {
+router.get("/localquestions", (req, res) => {
   res.json(LocalQuestions);
 });
 
