@@ -4,6 +4,7 @@ var Meo = require("../models/Meo");
 var Visit = require("../models/Visit");
 var Claim = require("../models/Claim");
 var School = require("../models/School");
+var Question = require("../models/Questions");
 const { v4: uuidv4 } = require("uuid");
 
 //register a new deo
@@ -24,7 +25,6 @@ router.post("/newuser", (req, res) => {
 });
 
 //login
-
 router.post("/login", (req, res) => {
   Deo.findOne({ userId: req.body.name, password: req.body.password })
     .then((d) => {
@@ -40,4 +40,20 @@ router.post("/login", (req, res) => {
     });
 });
 
+//post new or update questions from deo portal
+router.post("/postquestions", (req, res) => {
+  // console.log(req.body);
+  Question.findOneAndUpdate({ categoryName: req.body.categoryName }, req.body, {
+    new: true,
+    upsert: true, // Make this update into an upsert
+  })
+    .then((d) => {
+      console.log(d);
+      // res.sendStatus(200);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 module.exports = router;

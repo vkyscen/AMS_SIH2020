@@ -22,7 +22,15 @@ const SchoolSchema = new Schema({
     type: String,
   },
 
+  isVisited: {
+    type: Boolean,
+    required: true,
+  },
   mId: {
+    type: String,
+    required: true,
+  },
+  dId: {
     type: String,
     required: true,
   },

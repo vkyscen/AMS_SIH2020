@@ -4,7 +4,9 @@ var Meo = require("../models/Meo");
 var Visit = require("../models/Visit");
 var Claim = require("../models/Claim");
 var School = require("../models/School");
+var LocalQuestions = require("../LocalQuestions");
 const { v4: uuidv4 } = require("uuid");
+const { response } = require("express");
 
 //create new meo
 router.post("/newuser", (req, res) => {
@@ -39,6 +41,29 @@ router.post("/login", (req, res) => {
       console.log(err);
       res.sendStatus(404);
     });
+});
+
+//1)list Schools
+router.get("/tasklist", (req, res) => {
+  var requestedMeo = req.query.mId;
+  School.find({ mId: requestedMeo }, [
+    "-userId",
+    "-password",
+    "-schoolId",
+    "-mId",
+    "-__v",
+  ])
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+      res.sendStatus(200);
+    })
+    .catch((err) => console.log(err));
+});
+
+// fail safe questions route
+router.get("/lquestions", (req, res) => {
+  res.json(LocalQuestions);
 });
 
 module.exports = router;
