@@ -87,4 +87,32 @@ router.get("/getgrievances/:dId", (req, res) => {
     });
 });
 
+//get all schools list                                | url params -> dId
+router.get("/getallschools/:dId", (req, res) => {
+  School.find(
+    { dId: req.params.dId },
+    "schoolId schoolName mandalName meoName schoolAdress"
+  )
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+});
+
+//get all meos in the district                        | url params -> dId
+router.get("/getallmeos/:dId", (req, res) => {
+  Meo.find({ dId: req.params.dId }, "-password -dId -_id -__v")
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+});
 module.exports = router;
