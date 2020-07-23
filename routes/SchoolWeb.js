@@ -5,6 +5,7 @@ var Visit = require("../models/Visit");
 var Claim = require("../models/Claim");
 var School = require("../models/School");
 const { v4: uuidv4 } = require("uuid");
+const Grievance = require("../models/Grievance");
 
 //create new school
 router.post("/newuser", (req, res) => {
@@ -42,7 +43,41 @@ router.post("/login", (req, res) => {
 });
 
 //grievance                                             |params-> schoolId
-router.post("/grievance", (req, res) => {
-  let schoolName = await;
+router.post("/postgrievance", (req, res) => {
+  let reqSchoolName;
+  School.findOne({ schoolId: req.query.schoolId })
+    .then((d) => {
+      reqSchoolName = d.schoolName;
+      console.log(reqSchoolName);
+      Grievance.findOneAndUpdate(
+        { schoolId: req.query.schoolId },
+        {
+          GrievanceId: uuidv4(),
+          title: req.body.title,
+          Message: req.body.Message,
+          type: req.body.type,
+          schoolId: req.query.schoolId,
+          schoolName: reqSchoolName,
+        },
+        {
+          new: true,
+          upsert: true,
+        }
+      )
+        .then((dd) => {
+          res.json(dd);
+          console.log(dd);
+        })
+        .catch((err) => {
+          res.send(err);
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send("unable to find school name");
+    });
+
+  // console.log(schoolName);
 });
 module.exports = router;

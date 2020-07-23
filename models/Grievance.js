@@ -16,6 +16,10 @@ const GrievanceSchema = new Schema({
     required: true,
   },
 
+  schoolName: {
+    type: String,
+  },
+
   Message: {
     type: String,
   },

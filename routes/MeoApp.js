@@ -64,7 +64,7 @@ router.get("/tasklist", (req, res) => {
 
 //2)list categories
 router.get("/getcategories", (req, res) => {
-  Question.find({}, ["-__v", "-q1", "-q2", "-q3", "-q4", "-q5"])
+  Question.find({}, "categoryName")
     .then((d) => {
       console.log(d);
       res.json(d);
