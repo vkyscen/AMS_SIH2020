@@ -42,10 +42,10 @@ router.post("/login", (req, res) => {
     });
 });
 
-//grievance                                             |params-> schoolId
-router.post("/postgrievance", (req, res) => {
+//grievance                                             |url params-> schoolId
+router.post("/postgrievance/:schoolId", (req, res) => {
   let reqSchoolName;
-  School.findOne({ schoolId: req.query.schoolId })
+  School.findOne({ schoolId: req.params.schoolId })
     .then((d) => {
       reqSchoolName = d.schoolName;
       console.log(reqSchoolName);

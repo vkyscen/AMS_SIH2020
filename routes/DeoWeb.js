@@ -6,6 +6,7 @@ var Claim = require("../models/Claim");
 var School = require("../models/School");
 var Question = require("../models/Questions");
 const { v4: uuidv4 } = require("uuid");
+const Grievance = require("../models/Grievance");
 
 //register a new deo
 router.post("/newuser", (req, res) => {
@@ -40,9 +41,9 @@ router.post("/login", (req, res) => {
     });
 });
 
-//Dashboard                                           | params  -> dId
-router.get("/dashboard", (req, res) => {
-  var requestedDeo = req.query.dId;
+//Dashboard                                           | url params  -> dId
+router.get("/dashboard/:dId", (req, res) => {
+  var requestedDeo = req.params.dId;
   School.find({ dId: requestedDeo }, [
     "-userId",
     "-password",
@@ -70,6 +71,19 @@ router.post("/postquestions", (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+});
+
+//get all the grievances                              | url param -> dId
+router.get("/getgrievances/:dId", (req, res) => {
+  Grievance.find({ dId: req.params.dId })
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
     });
 });
 

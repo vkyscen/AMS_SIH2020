@@ -43,8 +43,8 @@ router.post("/login", (req, res) => {
     });
 });
 
-//1)list Schools                                        | params  -> mId
-router.get("/tasklist", (req, res) => {
+//1)list Schools                                        | url params  -> mId
+router.get("/tasklist/:mId", (req, res) => {
   var requestedMeo = req.query.mId;
   School.find({ mId: requestedMeo }, [
     "-userId",
@@ -75,9 +75,9 @@ router.get("/getcategories", (req, res) => {
     });
 });
 
-//3)list questions in particular category     	      | params  -> categoryName
-router.get("/getquestions", (req, res) => {
-  Question.find({ categoryName: req.query.categoryName }, "-__v")
+//3)list questions in particular category     	      | url params  -> categoryName
+router.get("/getquestions/:categoryName", (req, res) => {
+  Question.find({ categoryName: req.params.categoryName }, "-__v")
     .then((d) => {
       console.log(d);
       res.json(d);

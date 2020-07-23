@@ -33,6 +33,10 @@ const GrievanceSchema = new Schema({
     type: Date,
     default: new Date(),
   },
+  dId: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = Grievance = mongoose.model("Grievances", GrievanceSchema);
