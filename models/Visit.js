@@ -29,6 +29,7 @@ const VisitSchema = new Schema({
   },
   reportDate: {
     type: Date,
+    default: new Date(),
   },
 });
 

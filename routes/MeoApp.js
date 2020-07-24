@@ -87,9 +87,57 @@ router.get("/getquestions/:categoryName", (req, res) => {
       res.send("error occured, chck logs for more info");
     });
 });
+
+//4) post the vist report from meoApp
+router.post("/postreport/:schoolId", (req, res) => {
+  School.findOne({ schoolId: req.params.schoolId }, "schoolId mId dId")
+    .then((d) => {
+      console.log(d);
+      console.log(".........");
+      Visit.findOneAndUpdate(
+        { schoolId: d.schoolId },
+        {
+          schoolId: d.schoolId,
+          mId: d.mId,
+          dId: d.dId,
+          reportId: uuidv4(),
+          reportData: req.body.reportData,
+        },
+        { upsert: true }
+      )
+        .then((dd) => {
+          console.log(dd);
+          res.json(dd);
+        })
+        .catch((err) => {
+          console.log("error in posting visit");
+          res.send(err);
+        });
+    })
+    .catch((err) => {
+      console.log("error in finding dId");
+      res.send(err);
+    });
+});
 // fail safe questions route
 router.get("/localquestions", (req, res) => {
   res.json(LocalQuestions);
 });
 
 module.exports = router;
+/*
+Visit.findOneAndUpdate({schoolId: req.params.schoolId}, {
+    schoolId: req.params.schoolId,
+    mId: req.params.mId,
+    reportId: uuidv4(),
+
+  }, { upsert: true })
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+*/
