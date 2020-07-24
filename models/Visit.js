@@ -11,43 +11,14 @@ const VisitSchema = new Schema({
     type: String,
     required: true,
   },
-  observedData: {
-    category1: {
-      q1: { type: String },
-      q2: { type: String },
-      q3: { type: String },
-      q4: { type: String },
-      q5: { type: String },
+  reportData: [
+    {
+      categoryName: String,
+      fieldData: [
+        { question: String, answer: String, score: Number, total: Number },
+      ],
     },
-    category2: {
-      q1: { type: String },
-      q2: { type: String },
-      q3: { type: String },
-      q4: { type: String },
-      q5: { type: String },
-    },
-    category3: {
-      q1: { type: String },
-      q2: { type: String },
-      q3: { type: String },
-      q4: { type: String },
-      q5: { type: String },
-    },
-    category4: {
-      q1: { type: String },
-      q2: { type: String },
-      q3: { type: String },
-      q4: { type: String },
-      q5: { type: String },
-    },
-    category5: {
-      q1: { type: String },
-      q2: { type: String },
-      q3: { type: String },
-      q4: { type: String },
-      q5: { type: String },
-    },
-  },
+  ],
   reportId: {
     type: String,
     required: true,
@@ -56,9 +27,8 @@ const VisitSchema = new Schema({
     type: String,
     required: true,
   },
-  date: {
+  reportDate: {
     type: Date,
-    default: new Date(),
   },
 });
 
