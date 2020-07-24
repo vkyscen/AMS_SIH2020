@@ -2,7 +2,6 @@ const router = require("express").Router();
 var Deo = require("../models/Deo");
 var Meo = require("../models/Meo");
 var Visit = require("../models/Visit");
-var Claim = require("../models/Claim");
 var School = require("../models/School");
 const { v4: uuidv4 } = require("uuid");
 const Grievance = require("../models/Grievance");

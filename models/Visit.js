@@ -22,6 +22,9 @@ const VisitSchema = new Schema({
   ],
   reportId: {
     type: String,
+  },
+  visitId: {
+    type: String,
     required: true,
   },
   dId: {
@@ -30,7 +33,6 @@ const VisitSchema = new Schema({
   },
   reportDate: {
     type: Date,
-    default: new Date(),
   },
   inaccurateReport: {
     categories: Array,

@@ -2,7 +2,6 @@ const router = require("express").Router();
 var Deo = require("../models/Deo");
 var Meo = require("../models/Meo");
 var Visit = require("../models/Visit");
-var Claim = require("../models/Claim");
 var School = require("../models/School");
 var Question = require("../models/Questions");
 const { v4: uuidv4 } = require("uuid");
@@ -106,6 +105,26 @@ router.get("/getallschools/:dId", (req, res) => {
 //get all meos in the district                        | url params -> dId
 router.get("/getallmeos/:dId", (req, res) => {
   Meo.find({ dId: req.params.dId }, "-password -dId -_id -__v")
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+});
+
+//create a visit
+router.post("/createvisit", (req, res) => {
+  var newVisit = new Visit();
+  newVisit.schoolId = req.body.schoolId;
+  newVisit.mId = req.body.mId;
+  newVisit.dId = req.body.dId;
+  newVisit.visitId = uuidv4();
+
+  newVisit
+    .save()
     .then((d) => {
       console.log(d);
       res.json(d);
