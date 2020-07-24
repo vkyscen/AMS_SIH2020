@@ -7,7 +7,6 @@ var School = require("../models/School");
 var Question = require("../models/Questions");
 var LocalQuestions = require("../LocalQuestions");
 const { v4: uuidv4 } = require("uuid");
-const { response } = require("express");
 
 //create new meo
 router.post("/newuser", (req, res) => {
@@ -88,7 +87,7 @@ router.get("/getquestions/:categoryName", (req, res) => {
     });
 });
 
-//4) post the vist report from meoApp
+//4) post the vist report from meoApp                 | url params  -> schoolId | body -> reportData(Array)
 router.post("/postreport/:schoolId", (req, res) => {
   School.findOne({ schoolId: req.params.schoolId }, "schoolId mId dId")
     .then((d) => {
@@ -101,13 +100,15 @@ router.post("/postreport/:schoolId", (req, res) => {
           mId: d.mId,
           dId: d.dId,
           reportId: uuidv4(),
+          reportDate: Date.now(),
           reportData: req.body.reportData,
         },
         { upsert: true }
       )
         .then((dd) => {
           console.log(dd);
-          res.json(dd);
+          res.send("successfully updated.!");
+          // res.json(dd);
         })
         .catch((err) => {
           console.log("error in posting visit");
@@ -125,19 +126,3 @@ router.get("/localquestions", (req, res) => {
 });
 
 module.exports = router;
-/*
-Visit.findOneAndUpdate({schoolId: req.params.schoolId}, {
-    schoolId: req.params.schoolId,
-    mId: req.params.mId,
-    reportId: uuidv4(),
-
-  }, { upsert: true })
-    .then((d) => {
-      console.log(d);
-      res.json(d);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.send(err);
-    });
-*/

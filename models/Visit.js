@@ -17,6 +17,7 @@ const VisitSchema = new Schema({
       fieldData: [
         { question: String, answer: String, score: Number, total: Number },
       ],
+      message: String,
     },
   ],
   reportId: {
@@ -30,6 +31,14 @@ const VisitSchema = new Schema({
   reportDate: {
     type: Date,
     default: new Date(),
+  },
+  inaccurateReport: {
+    categories: Array,
+    message: String,
+  },
+  remarks: {
+    categoryName: String,
+    message: String,
   },
 });
 
