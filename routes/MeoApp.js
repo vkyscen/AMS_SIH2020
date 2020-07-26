@@ -82,7 +82,7 @@ router.get("/getquestions/:categoryName", (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.send("error occured, chck logs for more info");
+      res.send("error occured, check logs for more info");
     });
 });
 
