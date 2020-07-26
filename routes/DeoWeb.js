@@ -89,8 +89,7 @@ router.get("/getgrievances/:dId", (req, res) => {
 //get all schools list                                | url params -> dId
 router.get("/getallschools/:dId", (req, res) => {
   School.find(
-    { dId: req.params.dId },
-    "schoolId schoolName mandalName meoName schoolAdress"
+    { dId: req.params.dId },"-_id -password -schoolId"
   )
     .then((d) => {
       console.log(d);
