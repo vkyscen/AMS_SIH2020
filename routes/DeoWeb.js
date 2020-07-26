@@ -75,7 +75,7 @@ router.post("/postquestions", (req, res) => {
 
 //get all the grievances                              | url param -> dId
 router.get("/getgrievances/:dId", (req, res) => {
-  Grievance.find({ dId: req.params.dId })
+  Grievance.find({ dId: req.params.dId },"-_id -__v")
     .then((d) => {
       console.log(d);
       res.json(d);

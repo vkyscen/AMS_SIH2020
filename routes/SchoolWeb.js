@@ -55,11 +55,13 @@ router.post("/postgrievance/:schoolId", (req, res) => {
         { schoolId: req.query.schoolId },
         {
           GrievanceId: uuidv4(),
-          title: req.body.title,
-          Message: req.body.Message,
-          type: req.body.type,
-          schoolId: req.query.schoolId,
+          subject: req.body.subject,
+          message: req.body.message,
+          schoolId: req.params.schoolId,
           schoolName: reqSchoolName,
+          status:"Pending",
+          date:Date.now(),          
+          dId:d.dId,
         },
         {
           new: true,

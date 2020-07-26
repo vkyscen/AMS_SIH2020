@@ -7,7 +7,7 @@ const GrievanceSchema = new Schema({
     type: String,
     required: true,
   },
-  title: {
+  subject: {
     type: String,
     required: true,
   },
@@ -20,18 +20,18 @@ const GrievanceSchema = new Schema({
     type: String,
   },
 
-  Message: {
+  message: {
     type: String,
   },
 
-  type: {
+  status: {
     type: String,
     required: true,
   },
 
-  createdAt: {
-    type: Date,
-    default: new Date(),
+  date: {
+    type: Number,
+    required:true,
   },
   dId: {
     type: String,
