@@ -15,6 +15,7 @@ router.post("/newuser", (req, res) => {
   newSchool.schoolName = req.body.schoolName;
   newSchool.mandalName = req.body.mandalName;
   newSchool.mId = req.body.mId;
+  newSchool.dId = req.body.dId;
 
   newSchool
     .save()
