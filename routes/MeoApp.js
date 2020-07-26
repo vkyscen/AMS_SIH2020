@@ -119,6 +119,19 @@ router.post("/postreport/:schoolId", (req, res) => {
       res.send(err);
     });
 });
+
+//5) get all schools from visit collection              | url params  -> schoolId | body -> reportData(Array)
+router.get("/getschools/:mId", (req, res) => {
+  Visit.find({ mId: req.params.mId }, "-_id -__v")
+    .then((dd) => {
+      console.log(dd);
+      res.json(dd);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+});
 // fail safe questions route
 router.get("/localquestions", (req, res) => {
   res.json(LocalQuestions);

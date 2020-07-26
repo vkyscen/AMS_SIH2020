@@ -79,4 +79,5 @@ router.post("/postgrievance/:schoolId", (req, res) => {
 
   // console.log(schoolName);
 });
+
 module.exports = router;

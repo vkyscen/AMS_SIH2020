@@ -20,9 +20,7 @@ const VisitSchema = new Schema({
       message: String,
     },
   ],
-  reportId: {
-    type: String,
-  },
+
   visitId: {
     type: String,
     required: true,
@@ -41,6 +39,9 @@ const VisitSchema = new Schema({
   remarks: {
     categoryName: String,
     message: String,
+  },
+  schoolName: {
+    type: String,
   },
 });
 

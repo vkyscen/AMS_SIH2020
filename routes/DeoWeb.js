@@ -117,20 +117,28 @@ router.get("/getallmeos/:dId", (req, res) => {
 
 //create a visit
 router.post("/createvisit", (req, res) => {
-  var newVisit = new Visit();
-  newVisit.schoolId = req.body.schoolId;
-  newVisit.mId = req.body.mId;
-  newVisit.dId = req.body.dId;
-  newVisit.visitId = uuidv4();
-
-  newVisit
-    .save()
+  School.findOne({ schoolId: req.body.schoolId }, "schoolName")
     .then((d) => {
-      console.log(d);
-      res.json(d);
+      var newVisit = new Visit();
+      newVisit.schoolId = req.body.schoolId;
+      newVisit.mId = req.body.mId;
+      newVisit.dId = req.body.dId;
+      newVisit.schoolName = d.schoolName;
+      newVisit.visitId = uuidv4();
+
+      newVisit
+        .save()
+        .then((dd) => {
+          console.log(dd);
+          res.json(dd);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.send(err);
+        });
     })
     .catch((err) => {
-      console.log(err);
+      console.log("error in finding school name");
       res.send(err);
     });
 });
