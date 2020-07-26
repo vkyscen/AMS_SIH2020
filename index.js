@@ -33,7 +33,7 @@ const server = http.listen(port, () => {
 //demo route
 app.get("/", (req, res) => {
   // res.sendStatus(200);s
-  res.send("paltu");
+  res.send("paltu verithanam");
 });
 
 //Routes for Deo Web
