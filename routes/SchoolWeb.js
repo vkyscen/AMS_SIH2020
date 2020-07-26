@@ -14,6 +14,7 @@ router.post("/newuser", (req, res) => {
   newSchool.schoolId = uuidv4();
   newSchool.schoolName = req.body.schoolName;
   newSchool.mandalName = req.body.mandalName;
+  newSchool.schoolAdress = req.body.schoolAdress;
   newSchool.mId = req.body.mId;
   newSchool.dId = req.body.dId;
 

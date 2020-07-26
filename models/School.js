@@ -34,10 +34,10 @@ const SchoolSchema = new Schema({
   geoHash: {
     type: String,
   },
-  isVisited: {
-    type: Boolean,
+  lastVisited: {
+    type: Number,
     required: true,
-    default: false,
+    default: Date.now(),
   },
   dateTobeVisited: {
     type: Date,
