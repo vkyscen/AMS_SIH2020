@@ -103,7 +103,7 @@ router.get("/getallschools/:dId", (req, res) => {
 
 //get all meos in the district                        | url params -> dId
 router.get("/getallmeos/:dId", (req, res) => {
-  Meo.find({ dId: req.params.dId }, "-password -dId -_id -__v")
+  Meo.find({ dId: req.params.dId }, "-_id -password -__v")
     .then((d) => {
       console.log(d);
       res.json(d);
