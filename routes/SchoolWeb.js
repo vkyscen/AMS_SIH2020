@@ -85,4 +85,24 @@ router.post("/postgrievance/:schoolId", (req, res) => {
   // console.log(schoolName);
 });
 
+
+//4) Reporting the Inspection Process
+router.post("/complaint/:visitId", (req, res) => {
+
+  Visit.findOneAndUpdate(
+    { visitId: req.params.visitId },
+    {
+      inaccurateReport: req.body.inaccurateReport,
+    },
+    { upsert:true }
+    )
+    .then((d) => {
+      console.log(d)
+      res.send(200)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+});
+
 module.exports = router;

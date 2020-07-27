@@ -125,6 +125,9 @@ router.post("/createvisit", (req, res) => {
       newVisit.dId = req.body.dId;
       newVisit.schoolName = d.schoolName;
       newVisit.reportDate = req.body.reportDate;
+      newVisit.inaccurateReport = null;
+      newVisit.reportData = null;
+      newVisit.remarks = null;
 
       newVisit
         .save()
