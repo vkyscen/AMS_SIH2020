@@ -15,9 +15,8 @@ const VisitSchema = new Schema({
     {
       categoryName: String,
       fieldData: [
-        { question: String, answer: String, score: Number, total: Number },
+        { question: String, answer: String, qType:Number },
       ],
-      message: String,
     },
   ],
 
@@ -30,19 +29,22 @@ const VisitSchema = new Schema({
     required: true,
   },
   reportDate: {
-    type: Date,
+    type: Number,
+    required:true,
   },
   inaccurateReport: {
     categories: Array,
     message: String,
+    complaintDate:Number,
   },
-  remarks: {
-    categoryName: String,
-    message: String,
-  },
+  remarks: [
+    {
+      categoryName: String,
+      message:String,
+    },
+  ],
   schoolName: {
     type: String,
   },
 });
-
 module.exports = Visit = mongoose.model("Visits", VisitSchema);

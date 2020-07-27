@@ -121,9 +121,10 @@ router.post("/createvisit", (req, res) => {
       var newVisit = new Visit();
       newVisit.schoolId = req.body.schoolId;
       newVisit.mId = req.body.mId;
+      newVisit.visitId = uuidv4();
       newVisit.dId = req.body.dId;
       newVisit.schoolName = d.schoolName;
-      newVisit.visitId = uuidv4();
+      newVisit.reportDate = req.body.reportDate;
 
       newVisit
         .save()
@@ -141,5 +142,19 @@ router.post("/createvisit", (req, res) => {
       res.send(err);
     });
 });
+
+//get all visits for the deo                        | url params -> dId
+router.get("/getallvisits/:dId", (req, res) => {
+  Visit.find({ dId: req.params.dId }, "-_id -__v")
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+});
+
 
 module.exports = router;

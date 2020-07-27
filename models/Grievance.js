@@ -32,6 +32,7 @@ const GrievanceSchema = new Schema({
   date: {
     type: Number,
     required:true,
+    default:Date.now(),
   },
   dId: {
     type: String,

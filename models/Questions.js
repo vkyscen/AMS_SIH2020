@@ -12,7 +12,7 @@ const QuestionSchema = new Schema({
   questions: [
     {
       question: String,
-      type: Number,
+      qType: Number,
     },
   ],
 });
