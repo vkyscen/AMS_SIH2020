@@ -150,7 +150,7 @@ router.get("/plotgraph/:schoolId", (req, res) => {
       res.send(plotData.slice(0,2))
     }
     else if(plotData.length==1){
-      res.send(plotData[0])
+      res.send(plotData)
     }
     else{
       res.send([])
