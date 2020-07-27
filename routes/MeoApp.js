@@ -101,6 +101,8 @@ router.post("/postreport/:schoolId", (req, res) => {
           reportId: uuidv4(),
           reportDate: Date.now(),
           reportData: req.body.reportData,
+          remarks: req.body.remarks,
+
         },
         { upsert: true }
       )
