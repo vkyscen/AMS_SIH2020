@@ -191,4 +191,23 @@ router.post("/acceptgrievance/:GrievanceId", (req, res) => {
     })
 });
 
+//temporary reporting route from meo
+router.post("/postreport/:visitId", (req, res) => {
+  Visit.findOneAndUpdate(
+    { visitId:req.params.visitId },
+    { 
+      reportData: req.body.reportData,
+      remarks: req.body.remarks, 
+    },
+    { upsert:true}
+    )
+    .then((d) => {
+        console.log(d)
+        res.send(200)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+});
+
 module.exports = router;

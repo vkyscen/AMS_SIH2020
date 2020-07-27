@@ -125,7 +125,7 @@ router.get("/getdetails/:schoolId", (req, res) => {
   School.find({ schoolId: req.params.schoolId })
     .then((d) => {
       console.log(d)
-      res.send(d)
+      res.send(d[0])
     })
     .catch((err) => {
       console.log(err)
@@ -133,3 +133,29 @@ router.get("/getdetails/:schoolId", (req, res) => {
 });
 
 module.exports = router;
+
+//Graph Section (Recent two reports)
+router.get("/plotgraph/:schoolId", (req, res) => {
+
+  Visit.find({ schoolId: req.params.schoolId}).sort({ reportDate: -1})
+  .then((d) => {
+
+    var plotData = []
+    var dataLength = d.length
+    for(var p=0;p<dataLength;p++){
+      if (d[p].reportData!=null) {
+        plotData.push(d[p])
+      }
+    }
+    if (dataLength>=2) {
+      res.send(plotData.slice(0,2))
+    }
+    else if(dataLength==1){
+      res.send(plotData[0])
+    }
+    else{
+      res.send([])
+    }
+  })
+  
+});
