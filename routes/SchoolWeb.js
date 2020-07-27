@@ -119,4 +119,17 @@ router.get("/getallgrievances/:schoolId", (req, res) => {
     })
 });
 
+//Getting the school details
+router.get("/getdetails/:schoolId", (req, res) => {
+
+  School.find({ schoolId: req.params.schoolId })
+    .then((d) => {
+      console.log(d)
+      res.send(d)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+});
+
 module.exports = router;
