@@ -172,5 +172,23 @@ router.get("/getallquestions", (req, res) => {
     });
 });
 
+//Changing the status of Grievance or Claimed Feature from the school
+router.post("/acceptgrievance/:GrievanceId", (req, res) => {
+
+  Grievance.findOneAndUpdate(
+    { GrievanceId: req.params.GrievanceId },
+    {
+      status:"Completed"
+    },
+    { upsert:true }
+    )
+    .then((d) => {
+      console.log(d)
+      res.send(200)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+});
 
 module.exports = router;

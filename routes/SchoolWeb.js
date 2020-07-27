@@ -86,7 +86,7 @@ router.post("/postgrievance/:schoolId", (req, res) => {
 });
 
 
-//4) Reporting the Inspection Process
+//Reporting the Inspection Process
 router.post("/complaint/:visitId", (req, res) => {
 
   Visit.findOneAndUpdate(
