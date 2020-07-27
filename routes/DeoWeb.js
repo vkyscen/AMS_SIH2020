@@ -159,5 +159,18 @@ router.get("/getallvisits/:dId", (req, res) => {
     });
 });
 
+//list all questions
+router.get("/getallquestions", (req, res) => {
+  Question.find({}, "-_id -__v")
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+});
+
 
 module.exports = router;
