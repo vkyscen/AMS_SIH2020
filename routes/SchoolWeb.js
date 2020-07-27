@@ -105,4 +105,18 @@ router.post("/complaint/:visitId", (req, res) => {
     })
 });
 
+
+//List the grievances of the school
+router.get("/getallgrievances/:schoolId", (req, res) => {
+
+  Grievance.find({ schoolId: req.params.schoolId },"date GrievanceId subject message status")
+    .then((d) => {
+      console.log(d)
+      res.send(d)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+});
+
 module.exports = router;
