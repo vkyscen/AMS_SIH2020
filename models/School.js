@@ -33,7 +33,7 @@ const SchoolSchema = new Schema({
   },
   geoHash: {
     type: String,
-    required:true,
+    required: true,
   },
   lastVisited: {
     type: Number,

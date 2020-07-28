@@ -134,6 +134,17 @@ router.get("/getschools/:mId", (req, res) => {
       res.send(err);
     });
 });
+
+//6)get address of selected school                       | url params  -> mId
+router.get("/getaddress/:schoolId", (req, res) => {
+  School.findOne({ schoolId: req.params.schoolId }, "schoolAddress")
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => console.log(err));
+});
+
 // fail safe questions route
 router.get("/localquestions", (req, res) => {
   res.json(LocalQuestions);
