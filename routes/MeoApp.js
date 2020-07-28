@@ -41,7 +41,7 @@ router.post("/login", (req, res) => {
     });
 });
 
-//1)List Schools (from visit)
+//1)List Schools (from visit)                           | url params  -> mId
 router.get("/visitlist/:mId", (req, res) => {
   Visit.find(
     { mId: req.params.mId, reportData: [] },
@@ -51,10 +51,7 @@ router.get("/visitlist/:mId", (req, res) => {
       console.log(d);
       res.json(d);
     })
-    .catch((err) => {
-      console.log(err);
-      res.send(err);
-    });
+    .catch((err) => console.log(err));
 });
 
 //2)list categories
@@ -141,24 +138,6 @@ router.get("/getaddress/:schoolId", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-//list Schools     (change)                                   | url params  -> mId
-router.get("/tasklist/:mId", (req, res) => {
-  var requestedMeo = req.query.mId;
-  School.find({ mId: requestedMeo }, [
-    "-userId",
-    "-password",
-    "-schoolId",
-    "-mId",
-    "-dId",
-    "-__v",
-    "-_id",
-  ])
-    .then((d) => {
-      console.log(d);
-      res.json(d);
-    })
-    .catch((err) => console.log(err));
-});
 // fail safe questions route
 router.get("/localquestions", (req, res) => {
   res.json(LocalQuestions);

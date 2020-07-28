@@ -59,9 +59,9 @@ router.post("/postgrievance/:schoolId", (req, res) => {
           message: req.body.message,
           schoolId: req.params.schoolId,
           schoolName: reqSchoolName,
-          status: "Pending",
-          date: Date.now(),
-          dId: d.dId,
+          status:"Pending",
+          date:Date.now(),          
+          dId:d.dId,
         },
         {
           new: true,
@@ -85,70 +85,76 @@ router.post("/postgrievance/:schoolId", (req, res) => {
   // console.log(schoolName);
 });
 
+
 //Reporting the Inspection Process
 router.post("/complaint/:visitId", (req, res) => {
+
   Visit.findOneAndUpdate(
     { visitId: req.params.visitId },
     {
       inaccurateReport: req.body.inaccurateReport,
     },
-    { upsert: true }
-  )
+    { upsert:true }
+    )
     .then((d) => {
-      console.log(d);
-      res.send(200);
+      console.log(d)
+      res.send(200)
     })
     .catch((err) => {
-      console.log(err);
-    });
+      console.log(err)
+    })
 });
+
 
 //List the grievances of the school
 router.get("/getallgrievances/:schoolId", (req, res) => {
-  Grievance.find(
-    { schoolId: req.params.schoolId },
-    "date GrievanceId subject message status"
-  )
+
+  Grievance.find({ schoolId: req.params.schoolId },"date GrievanceId subject message status")
     .then((d) => {
-      console.log(d);
-      res.send(d);
+      console.log(d)
+      res.send(d)
     })
     .catch((err) => {
-      console.log(err);
-    });
+      console.log(err)
+    })
 });
 
 //Getting the school details
 router.get("/getdetails/:schoolId", (req, res) => {
+
   School.find({ schoolId: req.params.schoolId })
     .then((d) => {
-      console.log(d);
-      res.send(d[0]);
+      console.log(d)
+      res.send(d[0])
     })
     .catch((err) => {
-      console.log(err);
-    });
-});
-
-//Graph Section (Recent two reports)
-router.get("/plotgraph/:schoolId", (req, res) => {
-  Visit.find({ schoolId: req.params.schoolId })
-    .sort({ reportDate: -1 })
-    .then((d) => {
-      var plotData = [];
-      for (var p = 0; p < d.length; p++) {
-        if (d[p].reportData != null) {
-          plotData.push(d[p]);
-        }
-      }
-      if (plotData.length >= 2) {
-        res.send(plotData.slice(0, 2));
-      } else if (plotData.length == 1) {
-        res.send(plotData);
-      } else {
-        res.send([]);
-      }
-    });
+      console.log(err)
+    })
 });
 
 module.exports = router;
+
+//Graph Section (Recent two reports)
+router.get("/plotgraph/:schoolId", (req, res) => {
+
+  Visit.find({ schoolId: req.params.schoolId}).sort({ reportDate: -1})
+  .then((d) => {
+
+    var plotData = []
+    for(var p=0;p<d.length;p++){
+      if (d[p].reportData!=null) {
+        plotData.push(d[p])
+      }
+    }
+    if (plotData.length>=2) {
+      res.send(plotData.slice(0,2))
+    }
+    else if(plotData.length==1){
+      res.send(plotData)
+    }
+    else{
+      res.send([])
+    }
+  })
+  
+});
