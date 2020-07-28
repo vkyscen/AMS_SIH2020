@@ -75,7 +75,7 @@ router.post("/postquestions", (req, res) => {
 
 //get all the grievances                              | url param -> dId
 router.get("/getgrievances/:dId", (req, res) => {
-  Grievance.find({ dId: req.params.dId },"-_id -__v")
+  Grievance.find({ dId: req.params.dId }, "-_id -__v")
     .then((d) => {
       console.log(d);
       res.json(d);
@@ -88,9 +88,7 @@ router.get("/getgrievances/:dId", (req, res) => {
 
 //get all schools list                                | url params -> dId
 router.get("/getallschools/:dId", (req, res) => {
-  School.find(
-    { dId: req.params.dId },"-password -userId -__v -_id"
-  )
+  School.find({ dId: req.params.dId }, "-password -userId -__v -_id")
     .then((d) => {
       console.log(d);
       res.json(d);
@@ -174,40 +172,39 @@ router.get("/getallquestions", (req, res) => {
 
 //Changing the status of Grievance or Claimed Feature from the school
 router.post("/acceptgrievance/:GrievanceId", (req, res) => {
-
   Grievance.findOneAndUpdate(
     { GrievanceId: req.params.GrievanceId },
     {
-      status:"Completed"
+      status: "Completed",
     },
-    { upsert:true }
-    )
+    { upsert: true }
+  )
     .then((d) => {
-      console.log(d)
-      res.send(200)
+      console.log(d);
+      res.send(200);
     })
     .catch((err) => {
-      console.log(err)
-    })
+      console.log(err);
+    });
 });
 
 //temporary reporting route from meo
 router.post("/postreport/:visitId", (req, res) => {
   Visit.findOneAndUpdate(
-    { visitId:req.params.visitId },
-    { 
+    { visitId: req.params.visitId },
+    {
       reportData: req.body.reportData,
-      remarks: req.body.remarks, 
+      remarks: req.body.remarks,
     },
-    { upsert:true}
-    )
+    { upsert: true }
+  )
     .then((d) => {
-        console.log(d)
-        res.send(200)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      console.log(d);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 module.exports = router;
