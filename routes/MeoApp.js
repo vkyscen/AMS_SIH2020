@@ -54,6 +54,16 @@ router.get("/visitlist/:mId", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+//2)get address of selected school                       | url params  -> mId
+router.get("/getaddress/:schoolId", (req, res) => {
+  School.findOne({ schoolId: req.params.schoolId }, "schoolAddress")
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => console.log(err));
+});
+
 //2)list categories
 router.get("/getcategories", (req, res) => {
   Question.find({}, "categoryName")
@@ -80,44 +90,31 @@ router.get("/getquestions/:categoryName", (req, res) => {
     });
 });
 
-//4) post the vist report from meoApp                 | url params  -> schoolId | body -> reportData(Array)
-router.post("/postreport/:schoolId", (req, res) => {
-  School.findOne({ schoolId: req.params.schoolId }, "schoolId mId dId")
-    .then((d) => {
-      console.log(d);
-      console.log(".........");
-      Visit.findOneAndUpdate(
-        { schoolId: d.schoolId },
-        {
-          schoolId: d.schoolId,
-          mId: d.mId,
-          dId: d.dId,
-          reportId: uuidv4(),
-          reportDate: Date.now(),
-          reportData: req.body.reportData,
-          remarks: req.body.remarks,
-        },
-        { upsert: true }
-      )
-        .then((dd) => {
-          console.log(dd);
-          res.send("successfully updated.!");
-          // res.json(dd);
-        })
-        .catch((err) => {
-          console.log("error in posting visit");
-          res.send(err);
-        });
+//4) post the vist report from meoApp                 | url params  -> visitId | body -> reportData(Array)
+router.post("/postreport/:visitId", (req, res) => {
+  Visit.findOneAndUpdate(
+    { visitId: req.params.visitId },
+    {
+      reportDate: Date.now(),
+      reportData: req.body.reportData,
+      remarks: req.body.remarks,
+    },
+    { upsert: true }
+  )
+    .then((dd) => {
+      console.log(dd);
+      res.send("successfully updated.!");
+      // res.json(dd);
     })
     .catch((err) => {
-      console.log("error in finding dId");
+      console.log("error in posting visit");
       res.send(err);
     });
 });
 
 //5) get all schools from visit collection              | url params  -> schoolId | body -> reportData(Array)
-router.get("/getschools/:mId", (req, res) => {
-  Visit.find({ mId: req.params.mId }, "-_id -__v")
+router.get("/getallschools/:mId", (req, res) => {
+  Visit.find({ mId: req.params.mId }, "schoolName schoolId visitId")
     .then((dd) => {
       console.log(dd);
       res.json(dd);
@@ -126,16 +123,6 @@ router.get("/getschools/:mId", (req, res) => {
       console.log(err);
       res.send(err);
     });
-});
-
-//6)get address of selected school                       | url params  -> mId
-router.get("/getaddress/:schoolId", (req, res) => {
-  School.findOne({ schoolId: req.params.schoolId }, "schoolAddress")
-    .then((d) => {
-      console.log(d);
-      res.json(d);
-    })
-    .catch((err) => console.log(err));
 });
 
 // fail safe questions route
