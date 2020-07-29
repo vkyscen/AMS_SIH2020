@@ -78,11 +78,11 @@ router.get("/getcategories", (req, res) => {
 });
 
 //3)list questions in particular category     	      | url params  -> categoryName
-router.get("/getquestions/:categoryName", (req, res) => {
-  Question.find({ categoryName: req.params.categoryName }, "-__v")
+router.get("/getquestions", (req, res) => {
+  Question.findOne({ categoryName: req.query.categoryName }, "-_id  -__v")
     .then((d) => {
       console.log(d);
-      res.json(d);
+      res.json(d[0]);
     })
     .catch((err) => {
       console.log(err);
