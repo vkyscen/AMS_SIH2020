@@ -82,7 +82,7 @@ router.get("/listfeedbacks/:studentId", (req, res) => {
 
 //Get Profile
 router.get("/profile/:studentId", (req, res) => {
-  Student.find({ studentId:req.params.studentId },"-studentId -schoolId -__v")
+  Student.findOne({ studentId:req.params.studentId },"-studentId -schoolId -__v")
     .then((d) => {
           console.log(d);
           res.send(d);
