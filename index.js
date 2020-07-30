@@ -45,3 +45,7 @@ app.use("/deo", require("./routes/DeoWeb"));
 app.use("/meo", require("./routes/MeoApp"));
 // //Routes for School Web
 app.use("/school", require("./routes/SchoolWeb"));
+//Routes for Student Web
+app.use("/student", require("./routes/Student.js"));
+//Routes for Teacher Web
+app.use("/teacher", require("./routes/Teacher.js"));
