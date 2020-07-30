@@ -151,4 +151,33 @@ router.get("/plotgraph/:schoolId", (req, res) => {
     });
 });
 
+
+//List Students
+router.get("/liststudents/:schoolId", (req, res) => {
+  Student.find({ schoolId:req.params.schoolId },"-schoolId -__v")
+    .then((d) => {
+          console.log(d);
+          res.send(d);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.send(err);
+        });
+});
+
+//List Teachers
+router.get("/listteachers/:schoolId", (req, res) => {
+  Teacher.find({ schoolId:req.params.schoolId },"-schoolId -__v")
+    .then((d) => {
+          console.log(d);
+          res.send(d);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.send(err);
+        });
+});
+
+
+
 module.exports = router;
