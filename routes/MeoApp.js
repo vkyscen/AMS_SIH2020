@@ -44,7 +44,7 @@ router.post("/login", (req, res) => {
 //1)List Schools (from visit)                           | url params  -> mId
 router.get("/visitlist/:mId", (req, res) => {
   Visit.find(
-    { mId: req.params.mId, reportData: [] },
+    { mId: req.params.mId, reportData: null },
     "schoolName schoolId visitId"
   )
     .then((d) => {

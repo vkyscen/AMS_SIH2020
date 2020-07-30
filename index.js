@@ -4,9 +4,9 @@ const app = express();
 var http = require("http").Server(app);
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const cors = require("cors")
+const cors = require("cors");
 
-app.use(cors())
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(morgan("dev"));

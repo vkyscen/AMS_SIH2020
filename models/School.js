@@ -51,4 +51,4 @@ const SchoolSchema = new Schema({
   },
 });
 
-module.exports = School = mongoose.model("Schools", SchoolSchema);
+module.exports = School = mongoose.model("schools", SchoolSchema);

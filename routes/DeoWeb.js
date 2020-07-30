@@ -88,7 +88,8 @@ router.get("/getgrievances/:dId", (req, res) => {
 
 //get all schools list                                | url params -> dId
 router.get("/getallschools/:dId", (req, res) => {
-  School.find({ dId: req.params.dId }, "-password -userId -__v -_id")
+  console.log(req.params);
+  School.find({ dId: req.params.dId.toString() }, "-password -userId -__v -_id")
     .then((d) => {
       console.log(d);
       res.json(d);
