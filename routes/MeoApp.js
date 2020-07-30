@@ -99,6 +99,7 @@ router.post("/postreport/:visitId", (req, res) => {
       reportDate: Date.now(),
       reportData: req.body.reportData,
       remarks: req.body.remarks,
+      inaccurateReport: null,
     },
     { upsert: true }
   )
