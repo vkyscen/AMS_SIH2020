@@ -188,15 +188,48 @@ router.get("/visitlistv2/:mId", (req, res) => {
 });
 
 //1)List  completed Schools by meo(from visit)                        | url params  -> mId
-router.get("/completedschools/:mId", (req, res) => {
+router.get("/completedschoolsv2/:mId", (req, res) => {
   Visit.find(
     { mId: req.params.mId, reportData: { $ne: null } },
     "schoolName schoolId visitId reportDate"
   )
     .then((d) => {
-      console.log(d);
-      res.json(d);
+      let result = [];
+      Promise.all(d.map((item) => getSchooladdress(item.schoolId))).then(
+        (finalRes) => {
+          finalRes.map((address, ind) => {
+            const schoolAddress = JSON.parse(JSON.stringify(address));
+            result.push(
+              Object.assign({
+                schoolAddress: schoolAddress.schoolAddress,
+                // visitData: d[ind],
+                _id: d[ind]._id,
+                schoolId: d[ind].schoolId,
+                visitId: d[ind].visitId,
+                schoolName: d[ind].schoolName,
+                reportDate: d[ind].reportDate,
+              })
+            );
+          });
+          res.json(result);
+          console.log(result);
+        }
+      );
+
+      // d.map((item) => {
+      //   result.push(
+      //     Object.assign({
+      //       schoolAddress: getSchooladdress(item.schoolId),
+      //       visitData: item,
+      //     })
+      //   );
+      // });
+      // console.log(d);
+      console.log(result);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
 });
 module.exports = router;
