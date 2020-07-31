@@ -139,7 +139,7 @@ router.get("/localquestions", (req, res) => {
   res.json(LocalQuestions);
 });
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////V2////////////////////////////////
 
 //1)List pending  Schools (from visit)                           | url params  -> mId
 router.get("/visitlistv2/:mId", (req, res) => {
@@ -232,4 +232,17 @@ router.get("/completedschoolsv2/:mId", (req, res) => {
       res.send(err);
     });
 });
+
+router.get("/getallquestionsv2", (req, res) => {
+  Question.find({}, "-__v")
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      // res.send("error occured, chck logs for more info");
+    });
+});
+
 module.exports = router;
