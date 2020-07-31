@@ -7,6 +7,13 @@ var Question = require("../models/Questions");
 var LocalQuestions = require("../LocalQuestions");
 const { v4: uuidv4 } = require("uuid");
 
+getSchooladdress = (schoolId) => {
+  return School.findOne({ schoolId: schoolId }, "schoolAddress");
+};
+
+// orderEmployees: (companyID) => {
+//   return User.find({ company: companyID }).exec();
+// };
 //create new meo
 router.post("/newuser", (req, res) => {
   var newMeo = new Meo();
@@ -41,11 +48,11 @@ router.post("/login", (req, res) => {
     });
 });
 
-//1)List Schools (from visit)                           | url params  -> mId
+//1)List pending  Schools (from visit)                           | url params  -> mId
 router.get("/visitlist/:mId", (req, res) => {
   Visit.find(
     { mId: req.params.mId, reportData: null },
-    "schoolName schoolId visitId"
+    "schoolName schoolId visitId reportDate"
   )
     .then((d) => {
       console.log(d);
@@ -54,7 +61,7 @@ router.get("/visitlist/:mId", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-//2)get address of selected school                       | url params  -> mId
+//2)get address of selected school                                  | url params  -> mId
 router.get("/getaddress/:schoolId", (req, res) => {
   School.findOne({ schoolId: req.params.schoolId }, "schoolAddress")
     .then((d) => {
@@ -132,4 +139,64 @@ router.get("/localquestions", (req, res) => {
   res.json(LocalQuestions);
 });
 
+/////////////////////////////////////////////////////////////////
+
+//1)List pending  Schools (from visit)                           | url params  -> mId
+router.get("/visitlistv2/:mId", (req, res) => {
+  Visit.find(
+    { mId: req.params.mId, reportData: null },
+    "schoolName schoolId visitId reportDate"
+  )
+    .then((d) => {
+      let result = [];
+      Promise.all(d.map((item) => getSchooladdress(item.schoolId))).then(
+        (finalRes) => {
+          finalRes.map((address, ind) => {
+            const schoolAddress = JSON.parse(JSON.stringify(address));
+            result.push(
+              Object.assign({
+                schoolAddress: schoolAddress.schoolAddress,
+                // visitData: d[ind],
+                _id: d[ind]._id,
+                schoolId: d[ind].schoolId,
+                visitId: d[ind].visitId,
+                schoolName: d[ind].schoolName,
+                reportDate: d[ind].reportDate,
+              })
+            );
+          });
+          res.json(result);
+          console.log(result);
+        }
+      );
+
+      // d.map((item) => {
+      //   result.push(
+      //     Object.assign({
+      //       schoolAddress: getSchooladdress(item.schoolId),
+      //       visitData: item,
+      //     })
+      //   );
+      // });
+      // console.log(d);
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+});
+
+//1)List  completed Schools by meo(from visit)                        | url params  -> mId
+router.get("/completedschools/:mId", (req, res) => {
+  Visit.find(
+    { mId: req.params.mId, reportData: { $ne: null } },
+    "schoolName schoolId visitId reportDate"
+  )
+    .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => console.log(err));
+});
 module.exports = router;
