@@ -48,14 +48,15 @@ router.post("/login", (req, res) => {
 //Send FeedBack
 router.post("/sendFeedBack/:studentId", (req, res) => {
   var newFeedBack = new FeedBack();
-  newFeedBack.name = req.body.name;
+  newFeedBack.userName = req.body.name;
+  newFeedBack.teacherName = req.body.teacherName;
   newFeedBack.subject = req.body.subject;
   newFeedBack.message = req.body.message;
   newFeedBack.rating = req.body.rating;
   newFeedBack.studentId = req.params.studentId;
   newFeedBack.teacherId = req.body.teacherId;
   newFeedBack.position = req.body.position;
-  newFeedBack.reportDate = Date.now();
+  newFeedBack.date = Date.now();
 
  newFeedBack
     .save()
