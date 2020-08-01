@@ -60,6 +60,7 @@ router.get("/dashboard/:dId", (req, res) => {
 
 //post new or update questions from deo portal
 router.post("/postquestions", (req, res) => {
+  console.log("Checking",req.body)
   Question.findOneAndUpdate({ categoryName: req.body.categoryName }, req.body, {
     new: true,
     upsert: true,
