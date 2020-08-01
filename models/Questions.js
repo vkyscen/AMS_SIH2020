@@ -8,6 +8,10 @@ const QuestionSchema = new Schema({
     required: true,
     unique: true,
   },
+  visibleForTeachers:{
+    type:Boolean,
+    required:true,
+  },
 
   questions: [
     {
