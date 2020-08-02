@@ -46,7 +46,7 @@ const SchoolSchema = new Schema({
   meoName: {
     type: String,
   },
-  schoolAdress: {
+  schoolAddress: {
     type: String,
   },
   latestVisitId:{

@@ -133,8 +133,10 @@ router.post("/createvisit", (req, res) => {
       newVisit
         .save()
         .then((dd) => {
-          console.log(dd);
+          console.log('Visit created',dd);
           res.json(dd);
+
+          
         })
         .catch((err) => {
           console.log(err);
@@ -143,17 +145,12 @@ router.post("/createvisit", (req, res) => {
     })
     .catch((err) => {
       console.log("error in finding school name");
+      console.log('error',err)
       res.send(err);
     });
 
-    //Updating the School's latestVisitId
-    School.findOneAndUpdate(
-    { schoolId: req.body.schoolId },
-    {
-      latestVisitId: uniqueId ,
-    },
-    { upsert: true }
-  )
+
+
 });
 
 //get all visits for the deo                        | url params -> dId
@@ -235,3 +232,5 @@ router.post("/postreport/:visitId", (req, res) => {
 });
 
 module.exports = router;
+
+

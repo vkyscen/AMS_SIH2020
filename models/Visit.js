@@ -14,6 +14,7 @@ const VisitSchema = new Schema({
   reportData: [
     {
       categoryName: String,
+      visibleForTeachers: Boolean,
       fieldData: [
         { question: String, answer: String, qType:Number },
       ],
@@ -46,5 +47,6 @@ const VisitSchema = new Schema({
   schoolName: {
     type: String,
   },
+  
 });
 module.exports = Visit = mongoose.model("Visits", VisitSchema);

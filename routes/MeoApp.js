@@ -111,8 +111,27 @@ router.post("/postreport/:visitId", (req, res) => {
     { upsert: true }
   )
     .then((dd) => {
-      console.log(dd);
-      res.send("successfully updated.!");
+      console.log('checking data',dd);
+      res.sendStatus(200)
+
+      //Updating the School's latestVisitId
+          School.findOneAndUpdate(
+          { schoolId: dd.schoolId },
+          {
+            latestVisitId: dd.visitId ,
+          },
+          { upsert: true }
+          )
+         .then((d) => {
+              console.log('latestVisitId updated',d);
+              res.sendStatus(200);
+            })
+            .catch((err) => {
+              console.log(err);
+              res.send(err);
+            });
+          //-----------------------------------//
+
       // res.json(dd);
     })
     .catch((err) => {
