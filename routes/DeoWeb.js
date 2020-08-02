@@ -4,6 +4,7 @@ var Meo = require("../models/Meo");
 var Visit = require("../models/Visit");
 var School = require("../models/School");
 var Question = require("../models/Questions");
+var DistrictData = require("../models/DistrictData");
 const { v4: uuidv4 } = require("uuid");
 const Grievance = require("../models/Grievance");
 
@@ -230,6 +231,35 @@ router.post("/postreport/:visitId", (req, res) => {
       console.log(err);
     });
 });
+
+
+//Post report
+router.post("/postDistrictData", (req, res) => {
+  var districtData = new DistrictData();
+  districtData.data = req.body.data;
+
+  districtData
+    .save()
+    .then((d) => {
+      res.sendStatus(200);
+      console.log(d);
+    })
+    .catch((err) => console.log(err));
+});
+
+//Get the District Wise Report
+router.get("/getDistrictWiseReport", (req,res) => {
+  DistrictData.find()
+  .then((d) => {
+      console.log(d);
+      res.json(d);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+})
+
 
 module.exports = router;
 
