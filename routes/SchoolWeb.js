@@ -18,6 +18,7 @@ router.post("/newuser", (req, res) => {
   newSchool.geoHash = req.body.geoHash;
   newSchool.mId = req.body.mId;
   newSchool.dId = req.body.dId;
+  // newSchool.latestVisitId = null;
 
   newSchool
     .save()

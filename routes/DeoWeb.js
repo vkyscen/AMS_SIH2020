@@ -60,7 +60,6 @@ router.get("/dashboard/:dId", (req, res) => {
 
 //post new or update questions from deo portal
 router.post("/postquestions", (req, res) => {
-  console.log("Checking",req.body)
   Question.findOneAndUpdate({ categoryName: req.body.categoryName }, req.body, {
     new: true,
     upsert: true,
@@ -116,12 +115,14 @@ router.get("/getallmeos/:dId", (req, res) => {
 
 //create a visit
 router.post("/createvisit", (req, res) => {
+  var uniqueId;
   School.findOne({ schoolId: req.body.schoolId }, "schoolName")
     .then((d) => {
       var newVisit = new Visit();
       newVisit.schoolId = req.body.schoolId;
       newVisit.mId = req.body.mId;
-      newVisit.visitId = uuidv4();
+      uniqueId = uuidv4();
+      newVisit.visitId = uniqueId;
       newVisit.dId = req.body.dId;
       newVisit.schoolName = d.schoolName;
       newVisit.reportDate = req.body.reportDate;
@@ -144,6 +145,15 @@ router.post("/createvisit", (req, res) => {
       console.log("error in finding school name");
       res.send(err);
     });
+
+    //Updating the School's latestVisitId
+    School.findOneAndUpdate(
+    { schoolId: req.body.schoolId },
+    {
+      latestVisitId: uniqueId ,
+    },
+    { upsert: true }
+  )
 });
 
 //get all visits for the deo                        | url params -> dId

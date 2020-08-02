@@ -49,6 +49,10 @@ const SchoolSchema = new Schema({
   schoolAdress: {
     type: String,
   },
+  latestVisitId:{
+    type:String,
+    default:null,
+  }
 });
 
 module.exports = School = mongoose.model("schools", SchoolSchema);
